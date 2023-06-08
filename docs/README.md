@@ -13,7 +13,7 @@ https://github.com/Archakov06/macro-css
 
 
 
-### Lesson 1: инициализация проекта, настройка рабочего пространства
+### Lesson 1: настройка рабочего пространства, инициализация проекта, верстка главной
 - reactjs
 - nodejs
 - vscode
@@ -21,6 +21,11 @@ https://github.com/Archakov06/macro-css
 npm install node-sass@4.14.1 (Со слов автора для reacta требуется определенная версия, но она у меня не установилась поэтому пробую npm install node-sass)
 
 npm install macro-css В проекте используется самописная библиотека автора, которую можно устоновить в npm пакета, в данном пакете используются однотипные повторящиеся css стили. Библиотека называется macro-css
+
+
+
+### Lesson 2: Верстка
+закончил на https://youtu.be/bfj4lEyc4w8?list=PL0FGkDGJQjJEos_0yVkbKjsQ9zGVy3dG7&t=1620
 
 
 

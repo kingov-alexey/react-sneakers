@@ -34,9 +34,19 @@ function App() {
         </ul>
       </header>
       <div className="content p-40">
-        <h1 className="mb-40">Все кроссовки</h1>
+
+        <div className="d-flex align-center mb-40 justify-between">
+        <h1 >Все кроссовки</h1>
+        <div className="search-block d-flex">
+          <img src="/img/search.svg" alt="Search" />
+          <input type="text" placeholder="Поиск..."/>
+        </div>
+        </div>
+
         <div className="d-flex">
+
         <div className="card">
+          <img src="/img/heart-liked.svg" alt="Unliked" />
           <img width={133} height={112} src="/img/sneakers/1.jpg" alt="Sneakers" />
           <h5>Мужские Кроссовки Nike Blazer Mid Suede</h5>
           <div className="d-flex justify-between align-center">
@@ -50,6 +60,7 @@ function App() {
 
           </div>
         </div>
+
         <div className="card">
           <img width={133} height={112} src="/img/sneakers/2.jpg" alt="Sneakers" />
           <h5>Мужские Кроссовки Nike Blazer Mid Suede</h5>
@@ -64,6 +75,7 @@ function App() {
 
           </div>
         </div>
+
         <div className="card">
           <img width={133} height={112} src="/img/sneakers/3.jpg" alt="Sneakers" />
           <h5>Мужские Кроссовки Nike Blazer Mid Suede</h5>
@@ -78,6 +90,7 @@ function App() {
 
           </div>
         </div>
+
         <div className="card">
           <img width={133} height={112} src="/img/sneakers/4.jpg" alt="Sneakers" />
           <h5>Мужские Кроссовки Nike Blazer Mid Suede</h5>
