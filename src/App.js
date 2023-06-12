@@ -2,8 +2,12 @@ import Card from './components/Card/Card';
 import Header from './components/Header/Header';
 import Drawer from './components/Drawer/Drawer';
 
-const callback = () => {
-  alert(1114);
+const onClickPlus = () => {
+  alert('onClickPlus');
+};
+
+const onClickFavorite = () => {
+  alert('onClickFavorite');
 };
 
 const arr = [
@@ -42,7 +46,13 @@ function App() {
 
         <div className='d-flex'>
           {arr.map(obj => (
-            <Card imageUrl={obj.imageUrl} name={obj.name} price={obj.price} callback={callback} />
+            <Card
+              imageUrl={obj.imageUrl}
+              name={obj.name}
+              price={obj.price}
+              onClickPlus={onClickPlus}
+              onClickFavorite={onClickFavorite}
+            />
           ))}
         </div>
       </div>
