@@ -1,39 +1,48 @@
+import React from 'react';
 import Card from './components/Card/Card';
 import Header from './components/Header/Header';
 import Drawer from './components/Drawer/Drawer';
-
-const onClickPlus = () => {
-  alert('onClickPlus');
-};
-
-const onClickFavorite = () => {
-  alert('onClickFavorite');
-};
-
-const arr = [
-  {
-    imageUrl: '/img/sneakers/1.jpg',
-    name: 'Мужские Кроссовки Nike  Blazer Mid Suede',
-    price: 12999,
-  },
-  {
-    imageUrl: '/img/sneakers/2.jpg',
-    name: 'Мужские Кроссовки Nike  Air Max 270',
-    price: 15600,
-  },
-  {
-    imageUrl: '/img/sneakers/3.jpg',
-    name: 'Наименование кросовок 3',
-    price: 33333333,
-  },
-];
+import { useState } from 'react';
 
 function App() {
+
+
+  
+  const onClickFavorite = () => {
+    alert('onClickFavorite');
+  };
+
+  // https://6487f9130e2469c038fcb5cd.mockapi.io/items
+  const [items, setItems] = React.useState([]);
+  const [cartItems, setCartItems] = React.useState([]);
+  const [cartOpened, setCarOpened] = React.useState(false);
+
+React.useEffect(()=>{
+  fetch('https://6487f9130e2469c038fcb5cd.mockapi.io/items').then((res)=>{
+    return res.json();
+  }).then(json =>{
+    // console.log(json);
+    setItems(json);
+  });
+},[]);
+
+const onAddToCart = (obj) => {
+  setCartItems(prev => [...prev, obj])
+
+}
+
+console.log(cartItems);
+
+  let onClickCart = ()=>{
+    setCarOpened(!cartOpened);
+  }
+
   return (
     <div className='wrapper clear'>
-      <Drawer />
+      {/* {cartOpened ? <Drawer onClickCart={onClickCart}/> : null} */}
+      {cartOpened && <Drawer items={cartItems} onClickCart={onClickCart}/>}
 
-      <Header />
+      <Header onClickCart={onClickCart} />
 
       <div className='content p-40'>
         <div className='d-flex align-center mb-40 justify-between'>
@@ -44,14 +53,15 @@ function App() {
           </div>
         </div>
 
-        <div className='d-flex'>
-          {arr.map(obj => (
+        <div className='d-flex flex-wrap'>
+          {items.map(item => (
             <Card
-              imageUrl={obj.imageUrl}
-              name={obj.name}
-              price={obj.price}
-              onClickPlus={onClickPlus}
+              name={item.name}
+              price={item.price}
+              imageUrl={item.imageUrl}
               onClickFavorite={onClickFavorite}
+              onPlus={(obj)=>{onAddToCart(item)}}
+              
             />
           ))}
         </div>
