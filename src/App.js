@@ -2,50 +2,75 @@ import React from 'react';
 import Card from './components/Card/Card';
 import Header from './components/Header/Header';
 import Drawer from './components/Drawer/Drawer';
-import { useState } from 'react';
+import axios from 'axios';
 
 function App() {
 
-
-  
-  const onClickFavorite = () => {
-    alert('onClickFavorite');
-  };
-
-  // https://6487f9130e2469c038fcb5cd.mockapi.io/items
   const [items, setItems] = React.useState([]);
   const [cartItems, setCartItems] = React.useState([]);
   const [cartOpened, setCarOpened] = React.useState(false);
   const [searchValue, setSearchValue] = React.useState('');
 
-React.useEffect(()=>{
-  fetch('https://6487f9130e2469c038fcb5cd.mockapi.io/items').then((res)=>{
-    return res.json();
-  }).then(json =>{
-    setItems(json);
-  });
-},[]);
+  const onClickFavorite = () => {
+    alert('onClickFavorite');
+  };
 
-const onAddToCart = (obj) => {
-  setCartItems(prev => [...prev, obj])
+  React.useEffect(() => {
+    //варимнт нативного применения запроса с помощью fetch
+    // fetch('https://6487f9130e2469c038fcb5cd.mockapi.io/items')
+    //   .then(res => {
+    //     return res.json();
+    //   })
+    //   .then(json => {
+    //     setItems(json);
+    //   });
 
-}
+    //Вариант get запроса с применением библиотеки axios
+    axios.get('https://6487f9130e2469c038fcb5cd.mockapi.io/items').then(res => {
+      setItems(res.data);
+    });
 
-  let onClickCart = ()=>{
+    axios.get('https://6487f9130e2469c038fcb5cd.mockapi.io/cart').then(res => {
+      setCartItems(res.data);
+    });
+  }, []);
+
+  const onRemoveFromCart = id => {
+    // setCartItems(prev => [...prev, obj]);
+    // пример пост запроса
+    // axios.delete(`https://6487f9130e2469c038fcb5cd.mockapi.io/cart${id}`);
+    console.log(id);
+  };
+
+  const onAddToCart = obj => {
+    setCartItems(prev => [...prev, obj]);
+
+    // пример пост запроса
+    axios.post('https://6487f9130e2469c038fcb5cd.mockapi.io/cart', obj);
+  };
+
+  let onClickCart = () => {
     setCarOpened(!cartOpened);
-  }
+  };
 
-  const onChangeSearchInput = (event)=>{
+  let clearInputSearch = () => {
+    setSearchValue('');
+    console.log('clearInputSearch click');
+  };
+
+  const onChangeSearchInput = event => {
     console.log(event.target.value);
     setSearchValue(event.target.value);
-  }
+  };
 
   return (
     <div className='wrapper clear'>
       {/* можно так */}
       {/* {cartOpened ? <Drawer onClickCart={onClickCart}/> : null} */}
       {/* а можно так */}
-      {cartOpened && <Drawer items={cartItems} onClickCart={onClickCart}/>}
+      {cartOpened && (
+        <Drawer items={cartItems} onClickCart={onClickCart} onRemoveFromCart={onRemoveFromCart} />
+      )}
 
       <Header onClickCart={onClickCart} />
 
@@ -54,23 +79,38 @@ const onAddToCart = (obj) => {
           <h1>{searchValue ? `Поиск по запросу: ${searchValue}` : 'Все кросовки'}</h1>
           <div className='search-block d-flex'>
             <img src='/img/search.svg' alt='Search' />
-            
-            <input type='text' placeholder='Поиск...' value={searchValue} onChange={onChangeSearchInput}/>
+            {searchValue && (
+              <img
+                className='clear cu-p'
+                src='/img/btb-remove.svg'
+                alt='Clear'
+                onClick={clearInputSearch}
+              />
+            )}
+            <input
+              type='text'
+              placeholder='Поиск...'
+              value={searchValue}
+              onChange={onChangeSearchInput}
+            />
           </div>
         </div>
 
         <div className='d-flex flex-wrap'>
-          {items.map((item, index) => (
-            <Card
-              key={index}
-              name={item.name}
-              price={item.price}
-              imageUrl={item.imageUrl}
-              onClickFavorite={onClickFavorite}
-              onPlus={(obj)=>{onAddToCart(item)}}
-              
-            />
-          ))}
+          {items
+            .filter(item => item.name.toLowerCase().includes(searchValue.toLowerCase()))
+            .map((item, index) => (
+              <Card
+                key={index}
+                title={item.name}
+                price={item.price}
+                imageUrl={item.imageUrl}
+                onClickFavorite={onClickFavorite}
+                onPlus={obj => {
+                  onAddToCart(item);
+                }}
+              />
+            ))}
         </div>
       </div>
     </div>
