@@ -10,7 +10,6 @@ function Card({onClickFavorite, imageUrl, name, price, onPlus }) {
   };
 
   React.useEffect(()=>{
-    console.log('isAdded был изменен');
   },[isAdded]);
 
   return (

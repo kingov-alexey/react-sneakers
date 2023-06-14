@@ -16,12 +16,12 @@ function App() {
   const [items, setItems] = React.useState([]);
   const [cartItems, setCartItems] = React.useState([]);
   const [cartOpened, setCarOpened] = React.useState(false);
+  const [searchValue, setSearchValue] = React.useState('');
 
 React.useEffect(()=>{
   fetch('https://6487f9130e2469c038fcb5cd.mockapi.io/items').then((res)=>{
     return res.json();
   }).then(json =>{
-    // console.log(json);
     setItems(json);
   });
 },[]);
@@ -31,31 +31,38 @@ const onAddToCart = (obj) => {
 
 }
 
-console.log(cartItems);
-
   let onClickCart = ()=>{
     setCarOpened(!cartOpened);
   }
 
+  const onChangeSearchInput = (event)=>{
+    console.log(event.target.value);
+    setSearchValue(event.target.value);
+  }
+
   return (
     <div className='wrapper clear'>
+      {/* можно так */}
       {/* {cartOpened ? <Drawer onClickCart={onClickCart}/> : null} */}
+      {/* а можно так */}
       {cartOpened && <Drawer items={cartItems} onClickCart={onClickCart}/>}
 
       <Header onClickCart={onClickCart} />
 
       <div className='content p-40'>
         <div className='d-flex align-center mb-40 justify-between'>
-          <h1>Все кроссовки</h1>
+          <h1>{searchValue ? `Поиск по запросу: ${searchValue}` : 'Все кросовки'}</h1>
           <div className='search-block d-flex'>
             <img src='/img/search.svg' alt='Search' />
-            <input type='text' placeholder='Поиск...' />
+            
+            <input type='text' placeholder='Поиск...' value={searchValue} onChange={onChangeSearchInput}/>
           </div>
         </div>
 
         <div className='d-flex flex-wrap'>
-          {items.map(item => (
+          {items.map((item, index) => (
             <Card
+              key={index}
               name={item.name}
               price={item.price}
               imageUrl={item.imageUrl}

@@ -165,8 +165,9 @@ arr.push();
 ### Lesson 5: useContext, сохранение в mockAPI
 ======
 
-остановился смотреть на https://youtu.be/J22CdUt5OOs?list=PL0FGkDGJQjJEos_0yVkbKjsQ9zGVy3dG7&t=860
+остановился смотреть на https://youtu.be/J22CdUt5OOs?list=PL0FGkDGJQjJEos_0yVkbKjsQ9zGVy3dG7&t=2030 33:50
 
+посоветовал видео, решил сохранить весь канал, если сам смотрит значит одобряет... https://www.youtube.com/@it-sin9k
 
 ...
 

@@ -13,9 +13,9 @@ function Drawer({ onClickCart, items = [] }) {
         </h2>
 
         <div className="items">
-          {items.map((obj) => {
+          {items.map((obj, index) => {
             return (
-              <div className="cartItem d-flex align-center mb-20">
+              <div className="cartItem d-flex align-center mb-20" key={index}>
                 <div
                   style={{ backgroundImage: `url(${obj.imageUrl})` }}
                   className="cartItemImg"
