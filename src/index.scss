@@ -49,6 +49,32 @@ header {
   }
 }
 
+// стили для пустой корзины
+
+.cartEmpty{
+  .greenButton{
+    width: 245px;
+    margin-top: 20px;
+
+    &:hover{
+      img{
+        transform: rotate(180deg) translateX(3px);
+      }
+    }
+
+    img{
+      position: relative;
+      top: 1px;
+      transform: rotate(180deg);
+      margin-right: 15px;
+      transition: transform 0.15s ease-in-out;
+    }
+
+  }
+}
+
+// стили для пустой корзины
+
 .search-block {
   border: 1px solid #f3f3f3;
   border-radius: 10px;

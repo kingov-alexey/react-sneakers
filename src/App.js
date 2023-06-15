@@ -8,6 +8,7 @@ function App() {
 
   const [items, setItems] = React.useState([]);
   const [cartItems, setCartItems] = React.useState([]);
+  const [favorites, setFavorites] = React.useState([]);
   const [cartOpened, setCarOpened] = React.useState(false);
   const [searchValue, setSearchValue] = React.useState('');
 
@@ -36,17 +37,24 @@ function App() {
   }, []);
 
   const onRemoveFromCart = id => {
-    // setCartItems(prev => [...prev, obj]);
+    console.log('onRemoveFromCart',id);
+    
     // пример пост запроса
-    // axios.delete(`https://6487f9130e2469c038fcb5cd.mockapi.io/cart${id}`);
-    console.log(id);
+    axios.delete(`https://6487f9130e2469c038fcb5cd.mockapi.io/cart/${id}`);
+
+    setCartItems(prev => prev.filter(item => item.id !== id));
+    
   };
 
   const onAddToCart = obj => {
     setCartItems(prev => [...prev, obj]);
-
-    // пример пост запроса
     axios.post('https://6487f9130e2469c038fcb5cd.mockapi.io/cart', obj);
+  };
+
+  const onAddToFavorite = obj => {
+    setFavorites(prev => [...prev, obj]);
+
+    axios.post('https://648af67417f1536d65ea077b.mockapi.io/favorites', obj);
   };
 
   let onClickCart = () => {
@@ -98,14 +106,16 @@ function App() {
 
         <div className='d-flex flex-wrap'>
           {items
-            .filter(item => item.name.toLowerCase().includes(searchValue.toLowerCase()))
+            .filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase()))
             .map((item, index) => (
               <Card
                 key={index}
                 title={item.name}
                 price={item.price}
                 imageUrl={item.imageUrl}
-                onClickFavorite={onClickFavorite}
+                onAddToFavorite={obj =>{onAddToFavorite(obj)}
+                
+                }
                 onPlus={obj => {
                   onAddToCart(item);
                 }}

@@ -164,10 +164,9 @@ arr.push();
 - глупые и умные компоненты
 
 ### Lesson 5: useContext, сохранение в mockAPI
-
 ======
 
-остановился смотреть на https://youtu.be/J22CdUt5OOs?list=PL0FGkDGJQjJEos_0yVkbKjsQ9zGVy3dG7&t=3720 01:02:00
+остановился смотреть на https://youtu.be/J22CdUt5OOs?list=PL0FGkDGJQjJEos_0yVkbKjsQ9zGVy3dG7&t=5700 01:35:00
 
 посоветовал видео, решил сохранить весь канал, если сам смотрит значит одобряет... https://www.youtube.com/@it-sin9k
 
@@ -177,8 +176,9 @@ useContext, createContex
 
 $ npm install axios - устанавливаем либу для удобной отправки fetch запросов на api
 
-### Lesson 6: ???
+орп 
 
+### Lesson 6: ???
 ======
 
 666???
