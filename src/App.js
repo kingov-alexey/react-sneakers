@@ -3,8 +3,11 @@ import Card from './components/Card/Card';
 import Header from './components/Header/Header';
 import Drawer from './components/Drawer/Drawer';
 import axios from 'axios';
+import settings from './../db.json';
 
 function App() {
+
+  console.log('asdf', settings);
 
   const [items, setItems] = React.useState([]);
   const [cartItems, setCartItems] = React.useState([]);
@@ -27,7 +30,10 @@ function App() {
     //   });
 
     //Вариант get запроса с применением библиотеки axios
-    axios.get('https://6487f9130e2469c038fcb5cd.mockapi.io/items').then(res => {
+    // axios.get('https://6487f9130e2469c038fcb5cd.mockapi.io/items').then(res => {
+    //   setItems(res.data);
+    // });
+    axios.get('http://localhost:9999/items-sneakers').then(res => {
       setItems(res.data);
     });
 
