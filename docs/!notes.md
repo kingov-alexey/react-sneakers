@@ -158,15 +158,24 @@ price: 4444444,
 
 FETCH VS AXIOS
 
-arr.push();
+ //варимнт нативного применения запроса с помощью fetch
+    // fetch('https://6487f9130e2469c038fcb5cd.mockapi.io/items')
+    //   .then(res => {
+    //     return res.json();
+    //   })
+    //   .then(json => {
+    //     setItems(json);
+    //   });
 
-- что такое пропсы и стейт
-- глупые и умные компоненты
+    //Вариант get запроса с применением библиотеки axios
+    // axios.get('https://6487f9130e2469c038fcb5cd.mockapi.io/items').then(res => {
+    //   setItems(res.data);
+    // });
 
 ### Lesson 5: useContext, сохранение в mockAPI
 ======
 
-остановился смотреть на https://youtu.be/J22CdUt5OOs?list=PL0FGkDGJQjJEos_0yVkbKjsQ9zGVy3dG7&t=5700 01:35:00
+https://youtu.be/J22CdUt5OOs?list=PL0FGkDGJQjJEos_0yVkbKjsQ9zGVy3dG7&t=8420 02:20:20
 
 посоветовал видео, решил сохранить весь канал, если сам смотрит значит одобряет... https://www.youtube.com/@it-sin9k
 
@@ -176,7 +185,13 @@ useContext, createContex
 
 $ npm install axios - устанавливаем либу для удобной отправки fetch запросов на api
 
-орп 
+$ npm install -g json-server - устанавливаем либу для фейкого апи json-server
+
+$ json-server --watch db.json --port 9999 - запуск сервера с фейковым апи
+
+$ npm install react-router-dom - устанавливаем либу для маршрутизации страниц
+
+
 
 ### Lesson 6: ???
 ======

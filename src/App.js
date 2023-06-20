@@ -1,134 +1,130 @@
-import React from 'react';
-import Card from './components/Card/Card';
-import Header from './components/Header/Header';
-import Drawer from './components/Drawer/Drawer';
-import axios from 'axios';
-import settings from './../db.json';
+import React from "react";
+
+import Header from "./components/Header/Header";
+import Drawer from "./components/Drawer/Drawer";
+import axios from "axios";
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home/Home";
+import Favorites from "./pages/Favorites/Favorites";
 
 function App() {
+  const pathBackendApi = "http://localhost:9999"; //путь к api
+  const [items, setItems] = React.useState([]); //Кросовки на складе
+  const [cartItems, setCartItems] = React.useState([]); //кросовки в корзине
+  const [favorites, setFavorites] = React.useState([]); //желаемые кросовки
+  const [cartOpened, setCarOpened] = React.useState(false); //тогл боковой панели
+  const [searchValue, setSearchValue] = React.useState(""); //строка поиска
 
-  console.log('asdf', settings);
+  //* ****** Начало ЭНДПОИНТОВ */
 
-  const [items, setItems] = React.useState([]);
-  const [cartItems, setCartItems] = React.useState([]);
-  const [favorites, setFavorites] = React.useState([]);
-  const [cartOpened, setCarOpened] = React.useState(false);
-  const [searchValue, setSearchValue] = React.useState('');
-
-  const onClickFavorite = () => {
-    alert('onClickFavorite');
+  // * ********* table-CART CRUD *************************
+  //CREATE ELEMENT IN CART
+  const onAddToCart = (obj) => {
+    setCartItems((prev) => [...prev, obj]);
+    axios.post(`${pathBackendApi}/table-cart`, obj);
   };
 
-  React.useEffect(() => {
-    //варимнт нативного применения запроса с помощью fetch
-    // fetch('https://6487f9130e2469c038fcb5cd.mockapi.io/items')
-    //   .then(res => {
-    //     return res.json();
-    //   })
-    //   .then(json => {
-    //     setItems(json);
-    //   });
-
-    //Вариант get запроса с применением библиотеки axios
-    // axios.get('https://6487f9130e2469c038fcb5cd.mockapi.io/items').then(res => {
-    //   setItems(res.data);
-    // });
-    axios.get('http://localhost:9999/items-sneakers').then(res => {
-      setItems(res.data);
-    });
-
-    axios.get('https://6487f9130e2469c038fcb5cd.mockapi.io/cart').then(res => {
+  //READ ELEMENT FROM CART
+  const onReadTableCart = () => {
+    axios.get(`${pathBackendApi}/table-cart`).then((res) => {
       setCartItems(res.data);
     });
-  }, []);
+  };
 
-  const onRemoveFromCart = id => {
-    console.log('onRemoveFromCart',id);
+  //UPDATE ELEMENT IN CART
+  //..
+
+  // DELETE ELEMENT FROM CART
+  const onRemoveFromCart = (id) => {
+    axios.delete(`${pathBackendApi}/table-cart/${id}`);
+    setCartItems((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  // ********** table-sneakers CRUD *************************
+  //CREATE ELEMENT IN CNEAKERS
+  const onReadTableSneakers = (obj) => {
+    axios.get(`${pathBackendApi}/table-sneakers`).then((res) => {
+      setItems(res.data);
+    });
+  };
+
+  // ********** table-favorites CRUD *************************
+  // CREATE table-favotites
+  
+  const onAddToFavorite = (obj) => {
+    axios.post(`${pathBackendApi}/table-favorites`, obj);
+    setFavorites((prev) => [...prev, obj]);
+  };
+  
     
-    // пример пост запроса
-    axios.delete(`https://6487f9130e2469c038fcb5cd.mockapi.io/cart/${id}`);
+  
+      const onReadTableFavorite = () => {
+    axios.get(`${pathBackendApi}/table-favorites`).then((res) => {
+      setFavorites(res.data);
+    });
+  }
 
-    setCartItems(prev => prev.filter(item => item.id !== id));
-    
-  };
 
-  const onAddToCart = obj => {
-    setCartItems(prev => [...prev, obj]);
-    axios.post('https://6487f9130e2469c038fcb5cd.mockapi.io/cart', obj);
-  };
+  
 
-  const onAddToFavorite = obj => {
-    setFavorites(prev => [...prev, obj]);
+  //=================================================================
 
-    axios.post('https://648af67417f1536d65ea077b.mockapi.io/favorites', obj);
-  };
-
+  // ************************************ Методы
+  //toggle открыта закрыта панель корзины
   let onClickCart = () => {
     setCarOpened(!cartOpened);
   };
 
+  //clearInputSearch очистка поля поиска
   let clearInputSearch = () => {
-    setSearchValue('');
-    console.log('clearInputSearch click');
+    setSearchValue("");
   };
 
-  const onChangeSearchInput = event => {
+  //При изменении фиксировать строку поиска
+  const onChangeSearchInput = (event) => {
     console.log(event.target.value);
     setSearchValue(event.target.value);
   };
 
+  //хук юз эффект...
+  React.useEffect(() => {
+    onReadTableCart();
+    onReadTableSneakers();
+    onReadTableFavorite();
+  }, []);
+
   return (
-    <div className='wrapper clear'>
+    <div className="wrapper clear">
       {/* можно так */}
       {/* {cartOpened ? <Drawer onClickCart={onClickCart}/> : null} */}
-      {/* а можно так */}
+      {/* а можно верез && */}
       {cartOpened && (
-        <Drawer items={cartItems} onClickCart={onClickCart} onRemoveFromCart={onRemoveFromCart} />
+        <Drawer
+          items={cartItems}
+          onClickCart={onClickCart}
+          onRemoveFromCart={onRemoveFromCart}
+        />
       )}
 
       <Header onClickCart={onClickCart} />
 
-      <div className='content p-40'>
-        <div className='d-flex align-center mb-40 justify-between'>
-          <h1>{searchValue ? `Поиск по запросу: ${searchValue}` : 'Все кросовки'}</h1>
-          <div className='search-block d-flex'>
-            <img src='/img/search.svg' alt='Search' />
-            {searchValue && (
-              <img
-                className='clear cu-p'
-                src='/img/btb-remove.svg'
-                alt='Clear'
-                onClick={clearInputSearch}
-              />
-            )}
-            <input
-              type='text'
-              placeholder='Поиск...'
-              value={searchValue}
-              onChange={onChangeSearchInput}
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Home
+              items={items}
+              searchValue={searchValue}
+              setSearchValue={setSearchValue}
+              onChangeSearchInput={onChangeSearchInput}
+              onAddToFavorite={onAddToFavorite}
+              onAddToCart={onAddToCart}
+              clearInputSearch={clearInputSearch}
             />
-          </div>
-        </div>
-
-        <div className='d-flex flex-wrap'>
-          {items
-            .filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase()))
-            .map((item, index) => (
-              <Card
-                key={index}
-                title={item.name}
-                price={item.price}
-                imageUrl={item.imageUrl}
-                onAddToFavorite={obj =>{onAddToFavorite(obj)}
-                
-                }
-                onPlus={obj => {
-                  onAddToCart(item);
-                }}
-              />
-            ))}
-        </div>
-      </div>
+          }
+        />
+        <Route path="/favorites" element={<Favorites items={favorites} onAddToFavorite={onAddToFavorite} />} />
+      </Routes>
     </div>
   );
 }
