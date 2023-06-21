@@ -14,15 +14,15 @@ function Drawer({ onClickCart, onRemoveFromCart, items = [] }) {
 
         {items.length > 0 ? (
           <div className="items">
-            {items.map((obj, index) => {
+            {items.map((obj) => {
               return (
-                <div className="cartItem d-flex align-center mb-20" key={index}>
+                <div className="cartItem d-flex align-center mb-20" key={obj.id}>
                   <div
                     style={{ backgroundImage: `url(${obj.imageUrl})` }}
                     className="cartItemImg"
                   ></div>
                   <div className="mr-20 flex">
-                    <p className="mb-5">{obj.name}</p>
+                    <p className="mb-5">{obj.title}</p>
                     <b>{obj.price} руб.</b>
                   </div>
                   <img

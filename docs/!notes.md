@@ -172,16 +172,13 @@ FETCH VS AXIOS
     //   setItems(res.data);
     // });
 
-### Lesson 5: useContext, сохранение в mockAPI
+### Lesson 5: сохранение в mockAPI
 ======
-
-https://youtu.be/J22CdUt5OOs?list=PL0FGkDGJQjJEos_0yVkbKjsQ9zGVy3dG7&t=9420 02:37:00
 
 посоветовал видео, решил сохранить весь канал, если сам смотрит значит одобряет... https://www.youtube.com/@it-sin9k
 
 ...
 
-useContext, createContex
 
 $ npm install axios - устанавливаем либу для удобной отправки fetch запросов на api
 
@@ -193,10 +190,13 @@ $ npm install react-router-dom - устанавливаем либу для ма
 
 
 
-### Lesson 6: ???
+### Lesson 6: Страница Order
 ======
 
-666???
+https://youtu.be/2jLFTiytfgg?list=PL0FGkDGJQjJEos_0yVkbKjsQ9zGVy3dG7&t=2760 46:00
+
+useContext, createContex
+
 
 ### Lesson 7: ???
 
