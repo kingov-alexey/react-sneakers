@@ -50,24 +50,25 @@ function App() {
 
   // ********** table-favorites CRUD *************************
   // CREATE table-favotites
-  
-  const onAddToFavorite = (obj) => {
-    axios.post(`${pathBackendApi}/table-favorites`, obj);
-    setFavorites((prev) => [...prev, obj]);
+
+  const onAddToFavorite = async (obj) => {
+    if (favorites.find(favObj => favObj.id === obj.id)){
+      axios.delete(`${pathBackendApi}/table-favorites/${obj.id}`);
+      // setFavorites((prev) => prev.filter((item) => item.id !== obj.id));
+    } else {
+      const {data} = await axios.post(`${pathBackendApi}/table-favorites`, obj);
+      setFavorites((prev) => [...prev, data]);
+    }
+   
   };
-  
-    
-  
-      const onReadTableFavorite = () => {
+
+  const onReadTableFavorite = () => {
     axios.get(`${pathBackendApi}/table-favorites`).then((res) => {
       setFavorites(res.data);
     });
-  }
+  };
 
-
-  
-
-  //=================================================================
+  //===========================================================
 
   // ************************************ Методы
   //toggle открыта закрыта панель корзины
@@ -123,7 +124,12 @@ function App() {
             />
           }
         />
-        <Route path="/favorites" element={<Favorites items={favorites} onAddToFavorite={onAddToFavorite} />} />
+        <Route
+          path="/favorites"
+          element={
+            <Favorites items={favorites} onAddToFavorite={onAddToFavorite} />
+          }
+        />
       </Routes>
     </div>
   );

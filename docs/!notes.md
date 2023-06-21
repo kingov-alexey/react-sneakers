@@ -175,7 +175,7 @@ FETCH VS AXIOS
 ### Lesson 5: useContext, сохранение в mockAPI
 ======
 
-https://youtu.be/J22CdUt5OOs?list=PL0FGkDGJQjJEos_0yVkbKjsQ9zGVy3dG7&t=8420 02:20:20
+https://youtu.be/J22CdUt5OOs?list=PL0FGkDGJQjJEos_0yVkbKjsQ9zGVy3dG7&t=9420 02:37:00
 
 посоветовал видео, решил сохранить весь канал, если сам смотрит значит одобряет... https://www.youtube.com/@it-sin9k
 
