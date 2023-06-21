@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
 import styles from './Card.module.scss';
 
-function Card({onAddToFavorite, imageUrl, title, price, onPlus, favorited = false }) {
+function Card({ onFavorite, onAddToFavorite, imageUrl, title, price, onPlus, favorited = false }) {
   const [isAdded, setIsAdded] = useState(false);
   const [isFavorite, setIsFavorite] = useState(favorited);
 
-  const onClickFavorite = (obj) => {
+  const onClickFavorite = obj => {
     setIsFavorite(!isFavorite);
-    console.log('onCLickFavorite',obj)
+    console.log('onCLickFavorite', obj);
     onAddToFavorite(obj);
+    onFavorite(obj);
   };
 
   const onClickPlus = () => {
     onPlus({ imageUrl, title, price });
     setIsAdded(!isAdded);
   };
+
   const onClickCard = () => {
     alert('onClickCard показать модалку');
   };
@@ -23,13 +25,20 @@ function Card({onAddToFavorite, imageUrl, title, price, onPlus, favorited = fals
 
   return (
     <div className={styles.card}>
-      <div className={styles.favorite} onClick={()=>{onClickFavorite({ imageUrl, title, price })}}>
-        <img src={isFavorite ? '/img/liked.svg' : '/img/unliked.svg'} alt={isFavorite ? 'liked' : 'Unliked'}/>
+      <div
+        className={styles.favorite}
+        onClick={() => {
+          onClickFavorite({ imageUrl, title, price });
+        }}
+      >
+        <img
+          src={isFavorite ? '/img/liked.svg' : '/img/unliked.svg'}
+          alt={isFavorite ? 'liked' : 'Unliked'}
+        />
       </div>
 
       <div className={styles.slider} onClick={onClickCard}>
         <img width={133} height={112} src={imageUrl} alt='Sneakers' />
-
       </div>
       <h5>{title}</h5>
       <div className='d-flex justify-between align-center'>
