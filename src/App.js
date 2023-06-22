@@ -14,6 +14,7 @@ function App() {
   const [favorites, setFavorites] = React.useState([]); //желаемые кросовки
   const [cartOpened, setCarOpened] = React.useState(false); //тогл боковой панели
   const [searchValue, setSearchValue] = React.useState(""); //строка поиска
+  const [isLoading, setIsLoading] = React.useState(true);
 
   //* ****** Начало ЭНДПОИНТОВ */
 
@@ -23,6 +24,7 @@ function App() {
     console.log(obj);
 try {
   if (cartItems.find((item)=> Number(item.id) === Number(obj.id))){
+    axios.delete(`${pathBackendApi}/table-cart/${obj.id}`);
     setCartItems(prev => prev.filter(item => Number(item.id) !== Number(obj.id)));
 
   } else {
@@ -40,11 +42,9 @@ try {
   };
 
   //READ ELEMENT FROM CART
-  const onReadTableCart = () => {
-    axios.get(`${pathBackendApi}/table-cart`).then((res) => {
-      setCartItems(res.data);
-    });
-  };
+  // const onReadTableCart = () => {
+    
+  // };
 
   //UPDATE ELEMENT IN CART
   //..
@@ -57,11 +57,11 @@ try {
 
   // ********** table-sneakers CRUD *************************
   //CREATE ELEMENT IN CNEAKERS
-  const onReadTableSneakers = (obj) => {
-    axios.get(`${pathBackendApi}/table-sneakers`).then((res) => {
-      setItems(res.data);
-    });
-  };
+  // const onReadTableSneakers = (obj) => {
+  //   axios.get(`${pathBackendApi}/table-sneakers`).then((res) => {
+  //     setItems(res.data);
+  //   });
+  // };
 
   // ********** table-favorites CRUD *************************
   // CREATE table-favotites
@@ -84,11 +84,11 @@ try {
     }
   };
 
-  const onReadTableFavorite = () => {
-    axios.get(`${pathBackendApi}/table-favorites`).then((res) => {
-      setFavorites(res.data);
-    });
-  };
+  // const onReadTableFavorite = () => {
+  //   axios.get(`${pathBackendApi}/table-favorites`).then((res) => {
+  //     setFavorites(res.data);
+  //   });
+  // };
 
   //===========================================================
 
@@ -111,9 +111,22 @@ try {
 
   //хук юз эффект...
   React.useEffect(() => {
-    onReadTableCart();
-    onReadTableSneakers();
-    onReadTableFavorite();
+
+
+    async function fetchData(){
+      setIsLoading(true);
+      const cartResponse = await axios.get(`${pathBackendApi}/table-cart`);
+      const favoriteResponse = await axios.get(`${pathBackendApi}/table-favorites`);
+      const sneakersResponse = await axios.get(`${pathBackendApi}/table-sneakers`);
+      setIsLoading(false);
+
+      setCartItems(cartResponse.data);
+      setFavorites(favoriteResponse.data);
+      setItems(sneakersResponse.data);
+    }
+
+    fetchData();
+
   }, []);
 
   return (
@@ -137,12 +150,14 @@ try {
           element={
             <Home
               items={items}
+              cartItems={cartItems}
               searchValue={searchValue}
               setSearchValue={setSearchValue}
               onChangeSearchInput={onChangeSearchInput}
               onAddToFavorite={onAddToFavorite}
               onAddToCart={onAddToCart}
               clearInputSearch={clearInputSearch}
+              isLoading={isLoading}
             />
           }
         />

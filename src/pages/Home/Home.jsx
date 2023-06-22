@@ -4,12 +4,33 @@ function Home({
   items,
   searchValue,
   setSearchValue,
+  cartItems,
   onChangeSearchInput,
   onAddToFavorite,
   onAddToCart,
   clearInputSearch,
+  isLoading
 }) {
-  console.log("adsf", items);
+
+    const renderItems = () => {
+        const filteredItems = items.filter((item) =>
+        item.title.toLowerCase().includes(searchValue.toLowerCase()));
+        return (isLoading ? [...Array(10)] : filteredItems).map((item, index) => (
+            <Card
+              key={index}
+              onFavorite={(obj) => {
+                onAddToFavorite(obj);
+              }}
+              onPlus={(obj) => {
+                onAddToCart(item);
+              }}
+              added={cartItems.some(obj => Number(obj.id) === Number(item.id))}
+              {...item}
+              loading={isLoading}
+            />
+          ))
+
+    }
   return (
     <div className="content p-40">
       <div className="d-flex align-center mb-40 justify-between">
@@ -36,22 +57,7 @@ function Home({
       </div>
 
       <div className="d-flex flex-wrap">
-        {items
-          .filter((item) =>
-            item.title.toLowerCase().includes(searchValue.toLowerCase())
-          )
-          .map((item, index) => (
-            <Card
-              key={index}
-              onFavorite={(obj) => {
-                onAddToFavorite(obj);
-              }}
-              onPlus={(obj) => {
-                onAddToCart(item);
-              }}
-              {...item}
-            />
-          ))}
+        {renderItems()}
       </div>
     </div>
   );

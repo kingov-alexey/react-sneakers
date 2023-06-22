@@ -193,9 +193,16 @@ $ npm install react-router-dom - устанавливаем либу для ма
 ### Lesson 6: Страница Order
 ======
 
-https://youtu.be/2jLFTiytfgg?list=PL0FGkDGJQjJEos_0yVkbKjsQ9zGVy3dG7&t=2760 46:00
+https://youtu.be/2jLFTiytfgg?list=PL0FGkDGJQjJEos_0yVkbKjsQ9zGVy3dG7&t=6240 01:44:00
 
 useContext, createContex
+
+some
+added={cartItems.some(obj => obj.id === item.id)} ворачивает тру фолс... если хоть один элемент совпадет то тру
+
+https://skeletonreact.com - либа для отображения загрузки контента...
+
+$ npm i react-content-loader
 
 
 ### Lesson 7: ???

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ContentLoader from "react-content-loader"
 import styles from "./Card.module.scss";
 
 function Card({
@@ -10,8 +11,10 @@ function Card({
   price,
   onPlus,
   favorited = false,
+  added = false,
+  loading = false
 }) {
-  const [isAdded, setIsAdded] = useState(false);
+  const [isAdded, setIsAdded] = useState(added);
   const [isFavorite, setIsFavorite] = useState(favorited);
 
   const onClickFavorite = () => {
@@ -32,6 +35,23 @@ function Card({
 
   return (
     <div className={styles.card}>
+      {
+        loading ?  <ContentLoader 
+        speed={3}
+        width={156}
+        height={275}
+        viewBox="0 0 156 275"
+        backgroundColor="#ccadfe"
+        foregroundColor="#abeeff"
+      >
+        <rect x="0" y="0" rx="9" ry="9" width="32" height="32" /> 
+        <rect x="0" y="50" rx="25" ry="25" width="156" height="112" /> 
+        <rect x="0" y="182" rx="9" ry="9" width="156" height="15" /> 
+        <rect x="0" y="203" rx="9" ry="9" width="119" height="15" /> 
+        <rect x="2" y="234" rx="7" ry="7" width="62" height="13" /> 
+        <rect x="0" y="252" rx="7" ry="7" width="96" height="13" /> 
+        <rect x="124" y="234" rx="9" ry="9" width="32" height="32" />
+      </ContentLoader> : <>
       <div
         className={styles.favorite}
         onClick={() => {
@@ -60,6 +80,9 @@ function Card({
           onClick={onClickPlus}
         />
       </div>
+      </>
+      }
+    
     </div>
   );
 }
