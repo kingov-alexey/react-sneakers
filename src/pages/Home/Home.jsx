@@ -1,4 +1,6 @@
+import React from "react";
 import Card from "../../components/Card/Card";
+
 
 function Home({
   items,
@@ -24,7 +26,6 @@ function Home({
               onPlus={(obj) => {
                 onAddToCart(item);
               }}
-              added={cartItems.some(obj => Number(obj.id) === Number(item.id))}
               {...item}
               loading={isLoading}
             />

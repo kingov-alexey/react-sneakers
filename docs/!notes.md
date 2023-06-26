@@ -193,7 +193,7 @@ $ npm install react-router-dom - устанавливаем либу для ма
 ### Lesson 6: Страница Order
 ======
 
-https://youtu.be/2jLFTiytfgg?list=PL0FGkDGJQjJEos_0yVkbKjsQ9zGVy3dG7&t=6240 01:44:00
+https://youtu.be/2jLFTiytfgg?list=PL0FGkDGJQjJEos_0yVkbKjsQ9zGVy3dG7&t=10320 02:52:00
 
 useContext, createContex
 
@@ -203,6 +203,10 @@ added={cartItems.some(obj => obj.id === item.id)} ворачивает тру ф
 https://skeletonreact.com - либа для отображения загрузки контента...
 
 $ npm i react-content-loader
+
+
+ES7+ React/Redux/React-Native snippets установка дополнительного расширения для vscode
+например rafc создаст болванку реактовского компонента
 
 
 ### Lesson 7: ???

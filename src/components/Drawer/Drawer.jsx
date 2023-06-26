@@ -1,3 +1,5 @@
+import Info from "../Info/Info";
+
 function Drawer({ onClickCart, onRemoveFromCart, items = [] }) {
   return (
     <div className="overlay">
@@ -13,6 +15,7 @@ function Drawer({ onClickCart, onRemoveFromCart, items = [] }) {
         </h2>
 
         {items.length > 0 ? (
+          <div className="d-flex flex-column flex">
           <div className="items">
             {items.map((obj) => {
               return (
@@ -36,7 +39,7 @@ function Drawer({ onClickCart, onRemoveFromCart, items = [] }) {
                 </div>
               );
             })}
-
+</div>
             <div className="cartTotalBlock">
               <ul>
                 <li className="d-flex">
@@ -56,25 +59,13 @@ function Drawer({ onClickCart, onRemoveFromCart, items = [] }) {
               </button>
             </div>
           </div>
-        ) : (
-          <div className="cartEmpty d-flex align-center justify-center flex-column flex">
-            <img
-              className="mb-20"
-              width={120}
-              height={120}
-              src="img/empty-cart.jpg"
-              alt="empty cart"
-            />
-            <h2>Пустая корзина</h2>
-            <p className="opacity-6">
-              Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.
-            </p>
-            <button className="greenButton" onClick={onClickCart}>
-              <img src="/img/arrow.svg" alt="Arrow" />
-              вернуться назад
-            </button>
-          </div>
-        )}
+          
+        ) : ( 
+<Info 
+title="Корзина пустая"
+description="Добавьте хотябы одну пару кросовок, чтобы сделать заказ"
+image="img/empty-cart.jpg" />
+        )} 
       </div>
     </div>
   );

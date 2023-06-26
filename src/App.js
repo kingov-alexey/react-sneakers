@@ -7,6 +7,8 @@ import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import Favorites from './pages/Favorites/Favorites';
 
+import AppContext from './context';
+
 function App() {
   const pathBackendApi = 'http://localhost:9999'; //путь к api
   const [items, setItems] = React.useState([]); //Кросовки на складе
@@ -15,6 +17,10 @@ function App() {
   const [cartOpened, setCarOpened] = React.useState(false); //тогл боковой панели
   const [searchValue, setSearchValue] = React.useState(''); //строка поиска
   const [isLoading, setIsLoading] = React.useState(true);
+
+  const isItemAdded = (id)=>{
+    return cartItems.some((obj) => Number(obj.id) === Number(id));
+  }
 
   //* ****** Начало ЭНДПОИНТОВ */
 
@@ -62,9 +68,9 @@ function App() {
 
   const onAddToFavorite = async obj => {
     try {
-      if (favorites.find(favObj => favObj.id === obj.id)) {
+      if (favorites.find(favObj => Number(favObj.id) === Number(obj.id))) {
         axios.delete(`${pathBackendApi}/table-favorites/${obj.id}`);
-        // setFavorites((prev) => prev.filter((item) => item.id !== obj.id));
+         setFavorites((prev) => prev.filter((item) => Number(item.id) !== Number(obj.id)));
       } else {
         const { data } = await axios.post(`${pathBackendApi}/table-favorites`, obj);
         setFavorites(prev => [...prev, data]);
@@ -118,7 +124,8 @@ function App() {
   }, []);
 
   return (
-    <div className='wrapper clear'>
+    <AppContext.Provider value={{items, cartItems, favorites, isItemAdded, onAddToFavorite, setCarOpened}}>
+          <div className='wrapper clear'>
       {/* можно так */}
       {/* {cartOpened ? <Drawer onClickCart={onClickCart}/> : null} */}
       {/* а можно верез && */}
@@ -147,10 +154,12 @@ function App() {
         />
         <Route
           path='/favorites'
-          element={<Favorites items={favorites} onAddToFavorite={onAddToFavorite} />}
+          element={<Favorites />}
         />
       </Routes>
     </div>
+    </AppContext.Provider>
+
   );
 }
 
