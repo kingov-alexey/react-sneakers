@@ -124,7 +124,7 @@ function App() {
   }, []);
 
   return (
-    <AppContext.Provider value={{items, cartItems, favorites, isItemAdded, onAddToFavorite, setCarOpened}}>
+    <AppContext.Provider value={{items, cartItems, favorites, isItemAdded, onAddToFavorite, setCarOpened, setCartItems, pathBackendApi}}>
           <div className='wrapper clear'>
       {/* можно так */}
       {/* {cartOpened ? <Drawer onClickCart={onClickCart}/> : null} */}

@@ -1,9 +1,54 @@
+import React from 'react';
+
 import Info from "../Info/Info";
+import AppContext from '../../context';
+import styles from './Drawer.module.scss';
+import axios from 'axios';
 
 function Drawer({ onClickCart, onRemoveFromCart, items = [] }) {
+
+  const {cartItems, setCartItems, pathBackendApi} = React.useContext(AppContext);
+
+  const [orderId, setOrderId] = React.useState(null);
+  const [isOrderComplete, setIsOrderComplete] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false); 
+
+
+  
+  const onClickOrder = async () =>{
+    console.log('onClickOrder');
+    try {
+      setIsLoading(true);
+      const {data} = await axios.post(`${pathBackendApi}/table-orders`, {items: cartItems});
+      await axios.put(`${pathBackendApi}/table-cart`, []);
+
+// 
+// axios.delete(`${pathBackendApi}/table-cart`)
+//   .then(response => {
+//     console.log('Таблица "table-cart" успешно очищена.');
+//   })
+//   .catch(error => {
+//     console.error('Ошибка при очистке таблицы "table-cart":', error);
+//   });
+
+// 
+
+      setOrderId(data.id);
+      setIsOrderComplete(true);
+      setCartItems([]);
+    } catch (error) {
+      console.log(error);
+      alert('Не удалось создать заказ!');
+      
+    }
+    setIsLoading(false);
+
+  }
+
+
   return (
-    <div className="overlay">
-      <div className="drawer">
+    <div className="overlay" onClick={()=>{onClickCart()}}>
+      <div className="drawer" onClick={(event)=>{event.stopPropagation()}}>
         <h2 className="d-flex justify-between  mb-30">
           Корзина
           <img
@@ -54,7 +99,7 @@ function Drawer({ onClickCart, onRemoveFromCart, items = [] }) {
                 </li>
               </ul>
 
-              <button className="greenButton">
+              <button className="greenButton" onClick={onClickOrder} disabled={isLoading}>
                 Оформить заказ <img src="/img/arrow.svg" alt="Arrow" />
               </button>
             </div>
@@ -62,9 +107,9 @@ function Drawer({ onClickCart, onRemoveFromCart, items = [] }) {
           
         ) : ( 
 <Info 
-title="Корзина пустая"
-description="Добавьте хотябы одну пару кросовок, чтобы сделать заказ"
-image="img/empty-cart.jpg" />
+title={isOrderComplete ? "Заказ оформлен" : "Корзина пустая" }
+description={isOrderComplete ? `Ваш заказ #${orderId} скоро будет передан курьерской доставке` : "Добавьте хотябы одну пару кросовок, чтобы сделать заказ" }
+image={isOrderComplete ? "img/complete-order.jpg" : "img/empty-cart.jpg" } />
         )} 
       </div>
     </div>

@@ -193,7 +193,7 @@ $ npm install react-router-dom - устанавливаем либу для ма
 ### Lesson 6: Страница Order
 ======
 
-https://youtu.be/2jLFTiytfgg?list=PL0FGkDGJQjJEos_0yVkbKjsQ9zGVy3dG7&t=10320 02:52:00
+https://youtu.be/2jLFTiytfgg?list=PL0FGkDGJQjJEos_0yVkbKjsQ9zGVy3dG7&t=11260 03:07:40
 
 useContext, createContex
 
@@ -207,6 +207,27 @@ $ npm i react-content-loader
 
 ES7+ React/Redux/React-Native snippets установка дополнительного расширения для vscode
 например rafc создаст болванку реактовского компонента
+
+
+Заморочился на счет json-server и настроил его для более удобного взаимодействия,
+прописал в package.json необходимые настройки
+
+также чтобы запускать проект одной командой устанавливаем еще одну зависимость
+
+$ npm i -D concurrently 
+(в моем случае нужно было глобально установить )
+$ npm install -g concurrently
+
+
+и делаем настройки в package.json
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm start\"",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "server": "json-server -w server/db.json -p 9999"
+  },
 
 
 ### Lesson 7: ???
