@@ -20,19 +20,17 @@ function Drawer({ onClickCart, onRemoveFromCart, items = [] }) {
     try {
       setIsLoading(true);
       const {data} = await axios.post(`${pathBackendApi}/table-orders`, {items: cartItems});
-      await axios.put(`${pathBackendApi}/table-cart`, []);
 
-// 
-// axios.delete(`${pathBackendApi}/table-cart`)
-//   .then(response => {
-//     console.log('Таблица "table-cart" успешно очищена.');
-//   })
-//   .catch(error => {
-//     console.error('Ошибка при очистке таблицы "table-cart":', error);
-//   });
-
-// 
-
+      const deleteRequests = cartItems.map(item => axios.delete(`${pathBackendApi}/table-cart/${item.id}`));
+      
+      axios.all(deleteRequests)
+        .then(response => {
+          console.log('Таблица "table-cart" успешно очищена.');
+        })
+        .catch(error => {
+          console.error('Ошибка при очистке таблицы "table-cart":', error);
+        });
+  
       setOrderId(data.id);
       setIsOrderComplete(true);
       setCartItems([]);

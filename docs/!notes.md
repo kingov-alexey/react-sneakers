@@ -193,8 +193,6 @@ $ npm install react-router-dom - устанавливаем либу для ма
 ### Lesson 6: Страница Order
 ======
 
-https://youtu.be/2jLFTiytfgg?list=PL0FGkDGJQjJEos_0yVkbKjsQ9zGVy3dG7&t=11260 03:07:40
-
 useContext, createContex
 
 some
