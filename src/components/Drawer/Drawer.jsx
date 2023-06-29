@@ -1,20 +1,24 @@
 import React from 'react';
-
-import Info from "../Info/Info";
-import AppContext from '../../context';
-import styles from './Drawer.module.scss';
 import axios from 'axios';
 
-function Drawer({ onClickCart, onRemoveFromCart, items = [] }) {
+import Info from "../Info/Info";
 
-  const {cartItems, setCartItems, pathBackendApi} = React.useContext(AppContext);
+import AppContext from '../../context';
+import styles from './Drawer.module.scss';
+import {useCart} from './../hooks/useCart';
+
+
+function Drawer({ onClickCart, onRemoveFromCart, items = [] }) {
+  const {cartItems, setCartItems, totalPrice} = useCart()
+
+  // const {cartItems, setCartItems, pathBackendApi} = React.useContext(AppContext);
+  const {pathBackendApi} = React.useContext(AppContext);
 
   const [orderId, setOrderId] = React.useState(null);
   const [isOrderComplete, setIsOrderComplete] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false); 
 
 
-  
   const onClickOrder = async () =>{
     console.log('onClickOrder');
     try {
@@ -88,12 +92,12 @@ function Drawer({ onClickCart, onRemoveFromCart, items = [] }) {
                 <li className="d-flex">
                   <span>Итого:</span>
                   <div></div>
-                  <b>21 498 руб.</b>
+                  <b>{totalPrice} руб.</b>
                 </li>
                 <li className="d-flex">
                   <span>Налог 5%:</span>
                   <div></div>
-                  <b>1074 руб.</b>
+                  <b>{totalPrice / 100 * 5} руб.</b>
                 </li>
               </ul>
 
