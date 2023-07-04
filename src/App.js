@@ -8,6 +8,7 @@ import Home from './pages/Home/Home';
 import Favorites from './pages/Favorites/Favorites';
 
 import AppContext from './context';
+import Orders from './pages/Orders/Orders';
 
 function App() {
   const pathBackendApi = 'http://localhost:9999'; //путь к api
@@ -124,7 +125,7 @@ function App() {
   }, []);
 
   return (
-    <AppContext.Provider value={{items, cartItems, favorites, isItemAdded, onAddToFavorite, setCarOpened, setCartItems, pathBackendApi}}>
+    <AppContext.Provider value={{items, cartItems, favorites, isItemAdded, onAddToFavorite, setCarOpened, setCartItems, pathBackendApi, onAddToCart}}>
           <div className='wrapper clear'>
       {/* можно так */}
       {/* {cartOpened ? <Drawer onClickCart={onClickCart}/> : null} */}
@@ -155,6 +156,10 @@ function App() {
         <Route
           path='/favorites'
           element={<Favorites />}
+        />
+        <Route
+          path='/orders'
+          element={<Orders />}
         />
       </Routes>
     </div>

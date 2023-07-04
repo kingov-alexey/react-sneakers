@@ -232,6 +232,6 @@ $ npm install -g concurrently
 
 ======
 
-https://youtu.be/C_3ZT7j1_jc?list=PL0FGkDGJQjJEos_0yVkbKjsQ9zGVy3dG7&t=2590 43:10
+https://youtu.be/C_3ZT7j1_jc?list=PL0FGkDGJQjJEos_0yVkbKjsQ9zGVy3dG7&t=3960 01:06:00
 
 кастомные хуки

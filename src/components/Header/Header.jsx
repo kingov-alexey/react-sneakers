@@ -36,6 +36,7 @@ function Header(props) {
           </Link>
         </li>
         <li>
+        <Link to="/orders">
           <svg
             width="20"
             height="20"
@@ -50,6 +51,7 @@ function Header(props) {
               fill="#9B9B9B"
             />
           </svg>
+          </Link>
         </li>
       </ul>
     </header>
