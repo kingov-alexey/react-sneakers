@@ -8,7 +8,7 @@ import styles from './Drawer.module.scss';
 import {useCart} from './../hooks/useCart';
 
 
-function Drawer({ onClickCart, onRemoveFromCart, items = [] }) {
+function Drawer({ opened, onClickCart, onRemoveFromCart, items = [] }) {
   const {cartItems, setCartItems, totalPrice} = useCart()
 
   // const {cartItems, setCartItems, pathBackendApi} = React.useContext(AppContext);
@@ -49,8 +49,8 @@ function Drawer({ onClickCart, onRemoveFromCart, items = [] }) {
 
 
   return (
-    <div className="overlay" onClick={()=>{onClickCart()}}>
-      <div className="drawer" onClick={(event)=>{event.stopPropagation()}}>
+    <div className={`${styles.overlay} ${opened ? styles.overlayVisible : ''}`} onClick={()=>{onClickCart()}}>
+      <div className={styles.drawer} onClick={(event)=>{event.stopPropagation()}}>
         <h2 className="d-flex justify-between  mb-30">
           Корзина
           <img
@@ -63,7 +63,7 @@ function Drawer({ onClickCart, onRemoveFromCart, items = [] }) {
 
         {items.length > 0 ? (
           <div className="d-flex flex-column flex">
-          <div className="items">
+          <div className="items flex">
             {items.map((obj) => {
               return (
                 <div className="cartItem d-flex align-center mb-20" key={obj.id}>

@@ -27,17 +27,18 @@ function App() {
 
   // * ********* table-CART CRUD *************************
   //CREATE ELEMENT IN CART
-  const onAddToCart = obj => {
-    console.log(obj);
+  const onAddToCart = async (obj) => {
+   
     try {
       if (cartItems.find(item => Number(item.id) === Number(obj.id))) {
-        axios.delete(`${pathBackendApi}/table-cart/${obj.id}`);
+        await axios.delete(`${pathBackendApi}/table-cart/${obj.id}`);
         setCartItems(prev => prev.filter(item => Number(item.id) !== Number(obj.id)));
       } else {
-        axios.post(`${pathBackendApi}/table-cart`, obj);
+       await axios.post(`${pathBackendApi}/table-cart`, obj);
         setCartItems(prev => [...prev, obj]);
       }
     } catch (error) {
+      alert('не получилось добавить в корзину');
       console.log('не удалось добавть товар в корзину', error);
     }
   };
@@ -51,9 +52,16 @@ function App() {
   //..
 
   // DELETE ELEMENT FROM CART
-  const onRemoveFromCart = id => {
-    axios.delete(`${pathBackendApi}/table-cart/${id}`);
+  const onRemoveFromCart = async (id) => {
+    try {
+      await axios.delete(`${pathBackendApi}/table-cart/${id}`);
     setCartItems(prev => prev.filter(item => item.id !== id));
+    } catch (error) {
+      alert('не удалось удалить из корзины');
+      console.error(error);
+      
+    }
+    
   };
 
   // ********** table-sneakers CRUD *************************
@@ -111,14 +119,24 @@ function App() {
   React.useEffect(() => {
     async function fetchData() {
       setIsLoading(true);
-      const cartResponse = await axios.get(`${pathBackendApi}/table-cart`);
-      const favoriteResponse = await axios.get(`${pathBackendApi}/table-favorites`);
-      const sneakersResponse = await axios.get(`${pathBackendApi}/table-sneakers`);
+     try {
+
+      const [cartResponse, favoriteResponse, sneakersResponse] = await Promise.all([axios.get(`${pathBackendApi}/table-cart`), axios.get(`${pathBackendApi}/table-favorites`), await axios.get(`${pathBackendApi}/table-sneakers`)]);
+      // const cartResponse = await axios.get(`${pathBackendApi}/table-cart`);
+      // const favoriteResponse = await axios.get(`${pathBackendApi}/table-favorites`);
+      // const sneakersResponse = await axios.get(`${pathBackendApi}/table-sneakers`);
+
       setIsLoading(false);
 
       setCartItems(cartResponse.data);
       setFavorites(favoriteResponse.data);
       setItems(sneakersResponse.data);
+      
+     } catch (error) {
+      alert('Ошибка при запросе данных');
+      console.error(error);
+      
+     }
     }
 
     fetchData();
@@ -127,12 +145,7 @@ function App() {
   return (
     <AppContext.Provider value={{items, cartItems, favorites, isItemAdded, onAddToFavorite, setCarOpened, setCartItems, pathBackendApi, onAddToCart}}>
           <div className='wrapper clear'>
-      {/* можно так */}
-      {/* {cartOpened ? <Drawer onClickCart={onClickCart}/> : null} */}
-      {/* а можно верез && */}
-      {cartOpened && (
-        <Drawer items={cartItems} onClickCart={onClickCart} onRemoveFromCart={onRemoveFromCart} />
-      )}
+          <Drawer items={cartItems} onClickCart={onClickCart} onRemoveFromCart={onRemoveFromCart} opened={cartOpened}/>
 
       <Header onClickCart={onClickCart} />
 
