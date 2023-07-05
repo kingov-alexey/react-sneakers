@@ -235,3 +235,8 @@ $ npm install -g concurrently
 https://youtu.be/C_3ZT7j1_jc?list=PL0FGkDGJQjJEos_0yVkbKjsQ9zGVy3dG7&t=6000 01:40:00
 
 кастомные хуки
+
+
+
+DEPLOY
+$ npm install gh-pages ставим 
